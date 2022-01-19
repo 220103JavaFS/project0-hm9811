@@ -5,7 +5,7 @@ import java.util.Objects;
 public class UserBalanceModels {
     private int blanaceId;
     private UserModels user;
-    private int balance;
+    private float balance;
 
     public UserBalanceModels() {
     }
@@ -32,11 +32,11 @@ public class UserBalanceModels {
         this.user = user;
     }
 
-    public int getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
