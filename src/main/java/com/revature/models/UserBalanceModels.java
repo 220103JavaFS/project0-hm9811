@@ -16,7 +16,7 @@ public class UserBalanceModels {
         this.balance = balance;
     }
 
-    public int getBlanaceId() {
+    public int getBalanceId() {
         return blanaceId;
     }
 

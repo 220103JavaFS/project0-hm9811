@@ -43,10 +43,9 @@ public class UserBalanceDAOImpl implements UserBalanceDAO{
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setFloat(1, userBalance.getBalance());
-            statement.setInt(2, userBalance.getBlanaceId());
+            statement.setInt(2, userBalance.getBalanceId());
             statement.execute();
-
-            return true;
+            return !(userBalance.getBalance() <= 0);
         }catch(SQLException e){
             e.printStackTrace();
         }
