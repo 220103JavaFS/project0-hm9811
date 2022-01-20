@@ -106,23 +106,23 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public LoginDTO Login(String username, String password) {
+    public boolean Login(String username, String password) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM accounts WHERE user_acc = " + username +";";
+            String sql = "SELECT * FROM users WHERE user_acc = '" + username +"' and user_password = '" + password + "';";
             Statement statement = conn.createStatement();
 
+            //sql = "SELECT * from mytable WHERE username='" + username + "' and password='"password"';";
+
             ResultSet result = statement.executeQuery(sql);
-            while(result.next())
+            if(result.next())
             {
-                LoginDTO loginDTO = new LoginDTO();
-                if(result.getString("user_password").equals(password))
-                {
-                    return loginDTO;
-                }
+                return true;
+            }else{
+                return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new LoginDTO();
+        return false;
     }
 }

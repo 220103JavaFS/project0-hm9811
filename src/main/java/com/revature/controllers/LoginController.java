@@ -12,8 +12,7 @@ public class LoginController implements Controller{
     private Handler login = (ctx) -> {
         LoginDTO user = ctx.bodyAsClass(LoginDTO.class); // A DTO (Data transfer object) is a tempory object used just to communicate information.
 
-        user = loginService.login(user.username, user.password);
-        if(user != null){
+        if(loginService.login(user.username, user.password)){
             ctx.req.getSession();
             ctx.status(200);
         }else {

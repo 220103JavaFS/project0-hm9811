@@ -9,5 +9,5 @@ public interface UserDAO {
     List<UserModels> findAll();
     UserModels findUser(int id);
     boolean updateUser(UserModels user);
-    LoginDTO Login(String username, String password);
+    boolean Login(String username, String password);
 }
