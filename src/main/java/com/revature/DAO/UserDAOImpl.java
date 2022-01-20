@@ -1,9 +1,11 @@
 package com.revature.DAO;
 
+import com.revature.models.LoginDTO;
 import com.revature.models.RoleModels;
 import com.revature.models.UserDetailModels;
 import com.revature.models.UserModels;
 import com.revature.utils.ConnectionUtil;
+import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -94,5 +96,26 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean deleteUser(int id) {
         return false;
+    }
+
+    @Override
+    public LoginDTO Login(String username, String password) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM accounts WHERE user_acc = " + username +";";
+            Statement statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery(sql);
+            while(result.next())
+            {
+                LoginDTO loginDTO = new LoginDTO();
+                if(result.getString("user_password").equals(password))
+                {
+                    return loginDTO;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new LoginDTO();
     }
 }

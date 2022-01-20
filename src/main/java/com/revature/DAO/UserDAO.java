@@ -1,5 +1,6 @@
 package com.revature.DAO;
 
+import com.revature.models.LoginDTO;
 import com.revature.models.UserModels;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface UserDAO {
     boolean addUser(UserModels user);
     boolean updateUser(UserModels user);
     boolean deleteUser(int id);
+    LoginDTO Login(String username, String password);
 }
