@@ -22,7 +22,7 @@ public class UserBalanceDAOImpl implements UserBalanceDAO{
             ResultSet result = statement.executeQuery();
             UserBalanceModels userBalance = new UserBalanceModels();
             while(result.next()){
-                userBalance.setBlanaceId(result.getInt("balance_id"));
+                userBalance.setBalanceId(result.getInt("balance_id"));
                 int userId = result.getInt("user_id");
                 UserModels user = userDAO.findUser(userId);
                 userBalance.setUser(user);

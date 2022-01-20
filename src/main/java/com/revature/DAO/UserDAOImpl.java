@@ -17,26 +17,27 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<UserModels> findAll() {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM (SELECT * FROM users LEFT JOIN userdetail ON userdetail.user_name = users.user_name ) AS user_name;";
+            String sql = "SELECT * FROM (SELECT * FROM users LEFT JOIN roles ON roles.role_id = users.role_id ) AS role_id;";
 
             Statement statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(sql);
 
-            List<UserModels> list = new ArrayList<UserModels>();
+            List<UserModels> list = new ArrayList<>();
 
             while(result.next()){
                 UserModels user = new UserModels();
                 user.setId(result.getInt("user_id"));
+                user.setUserAccount(result.getString("user_acc"));
+                user.setUserEmail(result.getString("user_email"));
+                user.setUserPassword(result.getString("user_password"));
                 String userName = result.getString("user_name");
                 if(userName != null){
                     UserDetailModels userDetail = userDetailDAO.findByName(userName);
                     user.setUserNames(userDetail);
                 }
-                user.setUserAccount(result.getString("user_acc"));
-                user.setUserEmail(result.getString("user_email"));
-                user.setUserPassword(result.getString("user_password"));
-                RoleModels role = new RoleModels(result.getInt("role_id"), result.getString("role_name"));
+                RoleModels role = new RoleModels(result.getInt("role_id"),
+                        result.getString("role_name"));
                 user.setRoles(role);
                 list.add(user);
             }
@@ -86,7 +87,7 @@ public class UserDAOImpl implements UserDAO{
     public boolean updateUser(UserModels user) {
 
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "UPDATE user Detail SET user_email = ?, user_password = ? WHERE user_id = ?;";
+            String sql = "UPDATE users SET user_email = ?, user_password = ? WHERE user_id = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
 

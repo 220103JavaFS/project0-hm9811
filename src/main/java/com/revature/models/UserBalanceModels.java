@@ -3,7 +3,7 @@ package com.revature.models;
 import java.util.Objects;
 
 public class UserBalanceModels {
-    private int blanaceId;
+    private int balanceId;
     private UserModels user;
     private float balance;
 
@@ -11,17 +11,17 @@ public class UserBalanceModels {
     }
 
     public UserBalanceModels(int blanaceId, UserModels user, int balance) {
-        this.blanaceId = blanaceId;
+        this.balanceId = blanaceId;
         this.user = user;
         this.balance = balance;
     }
 
     public int getBalanceId() {
-        return blanaceId;
+        return balanceId;
     }
 
-    public void setBlanaceId(int blanaceId) {
-        this.blanaceId = blanaceId;
+    public void setBalanceId(int balanceId) {
+        this.balanceId = balanceId;
     }
 
     public UserModels getUser() {
@@ -45,18 +45,18 @@ public class UserBalanceModels {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserBalanceModels that = (UserBalanceModels) o;
-        return blanaceId == that.blanaceId && balance == that.balance && Objects.equals(user, that.user);
+        return balanceId == that.balanceId && balance == that.balance && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(blanaceId, user, balance);
+        return Objects.hash(balanceId, user, balance);
     }
 
     @Override
     public String toString() {
         return "UserBalanceModels{" +
-                "blanaceId=" + blanaceId +
+                "blanaceId=" + balanceId +
                 ", user=" + user +
                 ", balance=" + balance +
                 '}';
