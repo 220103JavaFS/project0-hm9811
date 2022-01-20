@@ -39,12 +39,11 @@ public class UserBalanceDAOImpl implements UserBalanceDAO{
     @Override
     public boolean updateBalance(UserBalanceModels userBalance, boolean deposit) {
         try(Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "UPDATE userBalance SET balance = balance " + (deposit ? "+" : "-") + "WHERE user_id = ?;";
+            String sql = "UPDATE userBalance SET user_balance = user_balance " + (deposit ? "+" : "-") + " ? WHERE balance_id = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
-
-            int count = 0;
-            statement.setFloat(++count, userBalance.getBalance());
+            statement.setFloat(1, userBalance.getBalance());
+            statement.setInt(2, userBalance.getBlanaceId());
             statement.execute();
 
             return true;

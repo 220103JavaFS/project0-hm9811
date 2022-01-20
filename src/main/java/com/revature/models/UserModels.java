@@ -4,21 +4,29 @@ import java.util.Objects;
 
 public class UserModels {
     private int id;
-    private UserDetailModels userNames;
     private String userAccount;
     private String userEmail;
     private String userPassword;
+    private UserDetailModels userNames;
     private RoleModels roles;
 
     public UserModels() {
     }
 
-    public UserModels(int id, UserDetailModels userName, String userAccount, String userEmail, String userPassword, RoleModels roles) {
+    public UserModels(int id, String userAccount, String userEmail, String userPassword, UserDetailModels userNames, RoleModels roles) {
         this.id = id;
-        this.userNames = userName;
         this.userAccount = userAccount;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
+        this.userNames = userNames;
+        this.roles = roles;
+    }
+
+    public UserModels(String userAccount, String userEmail, String userPassword, UserDetailModels userNames, RoleModels roles) {
+        this.userAccount = userAccount;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userNames = userNames;
         this.roles = roles;
     }
 
@@ -28,14 +36,6 @@ public class UserModels {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public UserDetailModels getUserNames() {
-        return userNames;
-    }
-
-    public void setUserNames(UserDetailModels userNames) {
-        this.userNames = userNames;
     }
 
     public String getUserAccount() {
@@ -62,6 +62,14 @@ public class UserModels {
         this.userPassword = userPassword;
     }
 
+    public UserDetailModels getUserNames() {
+        return userNames;
+    }
+
+    public void setUserNames(UserDetailModels userNames) {
+        this.userNames = userNames;
+    }
+
     public RoleModels getRoles() {
         return roles;
     }
@@ -75,23 +83,23 @@ public class UserModels {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserModels that = (UserModels) o;
-        return id == that.id && roles == that.roles && Objects.equals(userNames, that.userNames) && Objects.equals(userAccount, that.userAccount) && Objects.equals(userEmail, that.userEmail) && Objects.equals(userPassword, that.userPassword);
+        return id == that.id && Objects.equals(userAccount, that.userAccount) && Objects.equals(userEmail, that.userEmail) && Objects.equals(userPassword, that.userPassword) && Objects.equals(userNames, that.userNames) && Objects.equals(roles, that.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userNames, userAccount, userEmail, userPassword, roles);
+        return Objects.hash(id, userAccount, userEmail, userPassword, userNames, roles);
     }
 
     @Override
     public String toString() {
         return "UserModels{" +
                 "id=" + id +
-                ", userName='" + userNames + '\'' +
                 ", userAccount='" + userAccount + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
-                ", roleId=" + roles +
+                ", userNames=" + userNames +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -9,10 +9,10 @@ public class UserBalanceService {
     public UserBalanceModels findUserBalance(int id){
         return userBalanceDAO.findUserBalance(id);
     }
-    boolean deposit(UserBalanceModels userBalance, boolean deposit){
+    public boolean deposit(UserBalanceModels userBalance, boolean deposit){
         return userBalanceDAO.updateBalance(userBalance, true);
     }
-    boolean withdraw(UserBalanceModels userBalance, boolean deposit){
+    public boolean withdraw(UserBalanceModels userBalance, boolean deposit){
         return userBalanceDAO.updateBalance(userBalance, false);
     }
 }

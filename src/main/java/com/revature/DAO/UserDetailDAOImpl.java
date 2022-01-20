@@ -21,12 +21,12 @@ public class UserDetailDAOImpl implements UserDetailDAO{
 
             while(result.next()){
                 UserDetailModels userDetail = new UserDetailModels();
-                userDetail.setUserName(result.getString("home_name"));
-                userDetail.setUserStr(result.getString("home_str"));
-                userDetail.setUserCity(result.getString("home_city"));
-                userDetail.setUserRegion(result.getString("home_region"));
-                userDetail.setUserZip(result.getString("home_zip"));
-                userDetail.setUserCountry(result.getString("home_country"));
+                userDetail.setUserName(result.getString("user_name"));
+                userDetail.setUserStr(result.getString("user_str"));
+                userDetail.setUserCity(result.getString("user_city"));
+                userDetail.setUserRegion(result.getString("user_region"));
+                userDetail.setUserZip(result.getString("user_zip"));
+                userDetail.setUserCountry(result.getString("user_country"));
                 list.add(userDetail);
             }
 
@@ -40,7 +40,7 @@ public class UserDetailDAOImpl implements UserDetailDAO{
     @Override
     public UserDetailModels findByName(String name) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM homes WHERE home_name = ?;";
+            String sql = "SELECT * FROM userDetail WHERE user_name = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -49,12 +49,12 @@ public class UserDetailDAOImpl implements UserDetailDAO{
             ResultSet result = statement.executeQuery();
             UserDetailModels userDetail = new UserDetailModels();
             while(result.next()){
-                userDetail.setUserName(result.getString("home_name"));
-                userDetail.setUserStr(result.getString("home_str"));
-                userDetail.setUserCity(result.getString("home_city"));
-                userDetail.setUserRegion(result.getString("home_region"));
-                userDetail.setUserZip(result.getString("home_zip"));
-                userDetail.setUserCountry(result.getString("home_country"));
+                userDetail.setUserName(result.getString("user_name"));
+                userDetail.setUserStr(result.getString("user_str"));
+                userDetail.setUserCity(result.getString("user_city"));
+                userDetail.setUserRegion(result.getString("user_region"));
+                userDetail.setUserZip(result.getString("user_zip"));
+                userDetail.setUserCountry(result.getString("user_country"));
             }
             return userDetail;
         }catch(SQLException e){
