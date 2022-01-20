@@ -1,5 +1,8 @@
 package com.revature;
 import com.revature.controllers.Controller;
+import com.revature.controllers.UserBalanceController;
+import com.revature.controllers.UserController;
+import com.revature.controllers.UserDetailController;
 import io.javalin.Javalin;
 
 import java.util.*;
@@ -10,19 +13,12 @@ public class Main{
     public static void main(String[] args) {
         app = Javalin.create();
 
-        app.get("/hello", ((ctx) ->{
-            String url = ctx.url();
-            System.out.println(url);
-            ctx.html("<h1> Hello Javalin</h1>");
-            ctx.status(200);
-        }));
+        configure(new UserDetailController(), new UserController(), new UserBalanceController());
         app.start();
     }
-    public static void configure(Controller... controllers){
-
+    private static void configure(Controller... controllers){
         for(Controller c: controllers){
             c.addRoutes(app);
         }
-
     }
 }
