@@ -18,7 +18,7 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<UserModels> findAll() {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM users;";
+            String sql = "SELECT * FROM (SELECT * FROM users LEFT JOIN userdetail ON userdetail.user_name = users.user_name ) AS user_name;";
 
             Statement statement = conn.createStatement();
 
@@ -39,6 +39,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setUserPassword(result.getString("user_password"));
                 RoleModels role = new RoleModels(result.getInt("role_id"), result.getString("role_name"));
                 user.setRoles(role);
+                list.add(user);
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -49,22 +50,27 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public UserModels findUser(int id) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "SELECT * FROM users WHERE user_id " + id + ";";
+            String sql = "SELECT * FROM (SELECT * FROM users LEFT JOIN roles ON roles.role_id = users.role_id )" +
+                    " AS role_id WHERE user_id = " + id + ";";
 
             Statement statement = conn.createStatement();
+
             ResultSet result = statement.executeQuery(sql);
+
             UserModels user = new UserModels();
+
             while(result.next()){
                 user.setId(result.getInt("user_id"));
+                user.setUserAccount(result.getString("user_acc"));
+                user.setUserEmail(result.getString("user_email"));
+                user.setUserPassword(result.getString("user_password"));
                 String userName = result.getString("user_name");
                 if(userName != null){
                     UserDetailModels userDetail = userDetailDAO.findByName(userName);
                     user.setUserNames(userDetail);
                 }
-                user.setUserAccount(result.getString("user_acc"));
-                user.setUserEmail(result.getString("user_email"));
-                user.setUserPassword(result.getString("user_password"));
-                RoleModels role = new RoleModels(result.getInt("role_id"), result.getString("role_name"));
+                RoleModels role = new RoleModels(result.getInt("role_id"),
+                        result.getString("role_name"));
                 user.setRoles(role);
             }
             return user;
