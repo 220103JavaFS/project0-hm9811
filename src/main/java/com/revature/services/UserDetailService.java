@@ -21,4 +21,10 @@ public class UserDetailService {
     public boolean addUserDetail(UserDetailModels userDetail){
         return userDetailDAO.addUserDetail(userDetail);
     }
+    public boolean updateDetail(UserDetailModels detail){
+        return userDetailDAO.updateUserDetail(detail);
+    }
+    public boolean addDetail(UserDetailModels detail){
+        return userDetailDAO.addUserDetail(detail);
+    }
 }

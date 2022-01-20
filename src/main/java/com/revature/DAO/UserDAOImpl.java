@@ -7,10 +7,7 @@ import com.revature.models.UserModels;
 import com.revature.utils.ConnectionUtil;
 import org.postgresql.util.PSQLException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class UserDAOImpl implements UserDAO{
 
             ResultSet result = statement.executeQuery(sql);
 
-            List<UserModels> list = new ArrayList<>();
+            List<UserModels> list = new ArrayList<UserModels>();
 
             while(result.next()){
                 UserModels user = new UserModels();
@@ -43,6 +40,8 @@ public class UserDAOImpl implements UserDAO{
                 user.setRoles(role);
                 list.add(user);
             }
+
+            return list;
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -84,17 +83,24 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public boolean addUser(UserModels user) {
-        return false;
-    }
-
-    @Override
     public boolean updateUser(UserModels user) {
-        return false;
-    }
 
-    @Override
-    public boolean deleteUser(int id) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "UPDATE user Detail SET user_email = ?, user_password = ? WHERE user_id = ?;";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            int count = 0;
+            statement.setString(++count, user.getUserEmail());
+            statement.setString(++count, user.getUserPassword());
+            statement.setInt(++count, user.getId());
+
+            statement.execute();
+
+            return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         return false;
     }
 
